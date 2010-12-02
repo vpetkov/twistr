@@ -24,7 +24,7 @@ case $1 in
 		else tags="$4"
 	  fi
 
-   	  curl  -S \
+   	  postid=$(curl -s \
 		-d email=$email \
 		-d password=$password \
 		-d type=regular \
@@ -32,7 +32,8 @@ case $1 in
 		-d tags="$tags" \
 		-d generator=Twistr \
 		--data-urlencode body@"$2" \
-		"http://www.tumblr.com/api/write";;
+		"http://www.tumblr.com/api/write")
+	  test -z "$postid" && echo "Oh noes, there was an error!" || echo "Post-id: $postid";;
 
    photo) if [ -z "$3" ]
    		then echo -n "Enter the photo caption: " && read caption
@@ -44,7 +45,7 @@ case $1 in
 		else tags="$4"
 	  fi
 
-	  curl  -S \
+	  postid=$(curl  -s \
 		-F email=$email \
 		-F password=$password \
 		-F type=photo \
@@ -52,7 +53,8 @@ case $1 in
 		-F caption="$caption" \
 		-F tags="$tags" \
 		-F data=@"$2" \
-		"http://www.tumblr.com/api/write";; 
+		"http://www.tumblr.com/api/write")
+	  test -z "$postid" && echo "Oh noes, there was an error!" || echo "Post-id: $postid";;
 
    video) if [ -z "$3" ]
    		then echo -n "Enter the video caption: " && read caption
@@ -64,17 +66,18 @@ case $1 in
 		else tags="$4"
 	  fi
 
-	  curl  "-#" -S \
+	  postid=$(curl  -s \
 		-F email=$email \
 		-F password=$password \
 		-F type=video \
 		-F generator=Twistr \
 		-F caption="$caption" \
 		-F tags="$tags" \
-		-F "data=@"$2"" \
-		"http://www.tumblr.com/api/write";;
+		-F data=@"$2" \
+		"http://www.tumblr.com/api/write")
+	  test -z "$postid" && echo "Oh noes, there was an error!" || echo "Post-id: $postid";;
 
-   *)	echo -e "Twistr, a tumblr client.\n"
+   *)	echo "Twistr, a tumblr client."
 	echo "Usage: $0 text </path/to/file.txt> \"[title]\" \"[tags]\""
 	echo "       $0 photo </path/to/photo.jpg> \"[caption]\" \"[tags]\""
 	echo "       $0 video </path/to/video.mov> \"[caption]\" \"[tags]\""
