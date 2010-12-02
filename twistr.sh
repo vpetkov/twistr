@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Twistr v0.3, a Tumblr client.
+# Twistr v0.4, a Tumblr client.
 #
 # by Enric Morales (http://enric.me/twistr). Uncopyrighted 2010.
 
@@ -32,7 +32,7 @@ case $1 in
 		-d tags="$tags" \
 		-d generator=Twistr \
 		--data-urlencode body@"$2" \
-		"http://www.tumblr.com/api/write" ;;
+		"http://www.tumblr.com/api/write";;
 
    photo) if [ -z "$3" ]
    		then echo -n "Enter the photo caption: " && read caption
@@ -51,12 +51,33 @@ case $1 in
 		-F generator=Twistr \
 		-F caption="$caption" \
 		-F tags="$tags" \
+		-F data=@"$2" \
+		"http://www.tumblr.com/api/write";; 
+
+   video) if [ -z "$3" ]
+   		then echo -n "Enter the video caption: " && read caption
+		else caption="$3"
+	  fi
+
+	  if [ -z "$4" ]
+	  	then echo -n "Enter the video tags: " && read tags
+		else tags="$4"
+	  fi
+
+	  curl  "-#" -S \
+		-F email=$email \
+		-F password=$password \
+		-F type=video \
+		-F generator=Twistr \
+		-F caption="$caption" \
+		-F tags="$tags" \
 		-F "data=@"$2"" \
-		"http://www.tumblr.com/api/write" ;;
+		"http://www.tumblr.com/api/write";;
 
    *)	echo -e "Twistr, a tumblr client.\n"
 	echo "Usage: $0 text </path/to/file.txt> \"[title]\" \"[tags]\""
 	echo "       $0 photo </path/to/photo.jpg> \"[caption]\" \"[tags]\""
+	echo "       $0 video </path/to/video.mov> \"[caption]\" \"[tags]\""
 	exit 1 ;;
 esac
 #}}
