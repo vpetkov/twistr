@@ -10,7 +10,8 @@ Twistr is a very simple Tumblr client. In this version, it allows you to create 
 * Audio posts, of MP3 and AIFF files up to 10MB.
 * Text posts, in UTF-8 (multilingual).
 * Link posts, to share links with friends and family.
-
+* Conversation transcripts, which are read from a plain text file..
+* Quote posts.
 
 Installation
 ============

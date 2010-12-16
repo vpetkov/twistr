@@ -16,15 +16,15 @@ and chmod it 700 so that only you can read it:
 
 # {{ cURL magic!
 case $1 in
-   text)  if [ -z "$3" ]
-   		then echo -n "Enter the post title: " && read title
-		else title="$3"
-	  fi
-
-	  if [ -z "$4" ]
-	  	then echo -n "Enter the post tags: " && read tags
-		else tags="$4"
-	  fi
+	text)
+		if [ -z "$3" ]
+   			then echo -n "Enter the post title: " && read title
+			else title="$3"
+	  	fi
+		if [ -z "$4" ]
+	  		then echo -n "Enter the post tags: " && read tags
+			else tags="$4"
+	  	fi
 
    	  postid=$(curl -s \
 		-d email=$email \
@@ -37,15 +37,15 @@ case $1 in
 		"http://www.tumblr.com/api/write")
 	  test -z "$postid" && echo "Oh noes, there was an error!" || echo "Post-id: $postid";;
 
-   photo) if [ -z "$3" ]
-   		then echo -n "Enter the photo caption: " && read caption
-		else caption="$3"
-	  fi
-
-	  if [ -z "$4" ]
-	  	then echo -n "Enter the photo tags: " && read tags
-		else tags="$4"
-	  fi
+   photo)
+   		if [ -z "$3" ]
+   			then echo -n "Enter the photo caption: " && read caption
+			else caption="$3"
+	  	fi
+	  	if [ -z "$4" ]
+	  		then echo -n "Enter the photo tags: " && read tags
+			else tags="$4"
+	  	fi
 
 	  postid=$(curl  -s \
 		-F email=$email \
@@ -58,16 +58,15 @@ case $1 in
 		"http://www.tumblr.com/api/write")
 	  test -z "$postid" && echo "Oh noes, there was an error!" || echo "Post-id: $postid";;
 
-   video) if [ -z "$3" ]
-   		then echo -n "Enter the video caption: " && read caption
-		else caption="$3"
-	  fi
-
-	  if [ -z "$4" ]
-	  	then echo -n "Enter the video tags: " && read tags
-		else tags="$4"
-	  fi
-
+   video)
+   		if [ -z "$3" ]
+   			then echo -n "Enter the video caption: " && read caption
+			else caption="$3"
+	  	fi
+	  	if [ -z "$4" ]
+	  		then echo -n "Enter the video tags: " && read tags
+			else tags="$4"
+	  	fi
 	  postid=$(curl  -s \
 		-F email=$email \
 		-F password=$password \
@@ -79,21 +78,19 @@ case $1 in
 		"http://www.tumblr.com/api/write")
 	  test -z "$postid" && echo "Oh noes, there was an error!" || echo "Post-id: $postid";;
 
-	link) 	if [ -z "$3" ]
-	        	then echo -n "Enter the link name: " && read linkname
-		    	else linkname="$3"
-	      	fi
-			
-			if [ -z "$4" ]
-				then echo -n "Enter the link description: " && read linkdesc
-				else linkdesc="$4" 
-			fi
-
-			if [ -z "$5" ]
-				then echo -n "Enter the post tags: " && read tags
-				else tags="$5" 
-			fi
-
+	link)
+		if [ -z "$3" ]
+	      	then echo -n "Enter the link name: " && read linkname
+	    	else linkname="$3"
+	   	fi
+		if [ -z "$4" ]
+			then echo -n "Enter the link description: " && read linkdesc
+			else linkdesc="$4" 
+		fi
+		if [ -z "$5" ]
+			then echo -n "Enter the post tags: " && read tags
+			else tags="$5" 
+		fi
 
 	  postid=$(curl  -s \
 		-F email=$email \
@@ -107,20 +104,20 @@ case $1 in
 		"http://www.tumblr.com/api/write")
 	  test -z "$postid" && echo "Oh noes, there was an error!" || echo "Post-id: $postid";;
 
-	audio)	if [ -z "$3" ]
-	      		then echo -n "Enter the audio title: " && read title
-		 		else title="$3"
-			fi   
+	audio)
+		if [ -z "$3" ]
+	   		then echo -n "Enter the audio title: " && read title
+	 		else title="$3"
+		fi   
 
-			if [ -z "$4" ]
-				then echo -n "Enter the audio caption: " && read caption
-				else caption="$4" 
-			fi
-			if [ -z "$5" ]
-				then echo -n "Enter the post tags: " && read tags
-				else tags="$5" 
-			fi
-
+		if [ -z "$4" ]
+			then echo -n "Enter the audio caption: " && read caption
+			else caption="$4" 
+		fi
+		if [ -z "$5" ]
+			then echo -n "Enter the post tags: " && read tags
+			else tags="$5" 
+		fi
 
 	  postid=$(curl  -s \
 		-F email=$email \
@@ -133,13 +130,68 @@ case $1 in
 		-F data=@"$2" \
 		"http://www.tumblr.com/api/write")
 	  test -z "$postid" && echo "Oh noes, there was an error!" || echo "Post-id: $postid";;
+	
+	quote)
+		if [ -z "$2" ]
+      		then echo -n "Enter the quote: " && read quote
+	 		else quote="$2"
+		fi   
 
-   	*)	echo "Twistr, a tumblr client. Usage:"
-		echo 'twistr text </path/to/file.txt> "[title]" "[tags]"'
-		echo '       photo </path/to/photo.jpg> "[caption]" "[tags]"'
-		echo '       video </path/to/video.mov> "[caption]" "[tags]"'
-		echo '       audio </path/to/audio.mp3> "[title]" "[caption]" "[tags]"'
-		echo '       link <URI> "[link name]" "[link description]" "[tags]"'
+		if [ -z "$3" ]
+			then echo -n "Enter the quote source: " && read source 
+			else caption="$3" 
+		fi
+		if [ -z "$4" ]
+			then echo -n "Enter the post tags: " && read tags
+			else tags="$4" 
+		fi
+
+	  postid=$(curl  -s \
+		-d email=$email \
+		-d password=$password \
+		-d type=quote \
+		-d generator=Twistr \
+		-d quote="$quote" \
+		-d source="$source" \
+		-d tags="$tags" \
+		"http://www.tumblr.com/api/write")
+	  test -z "$postid" && echo "Oh noes, there was an error!" || echo "Post-id: $postid";;
+
+	conversation)
+		if [ -z "$2" ]
+			then echo -n "Type in the conversation: " && read convo
+			else conversation="$2"
+		fi
+		if [ -z "$3" ]
+	    	then echo -n "Enter the conversation's theme: " && read title
+			else title="$3"
+		fi   
+
+		if [ -z "$4" ]
+			then echo -n "Enter the post tags: " && read tags
+			else tags="$4" 
+		fi
+
+	  postid=$(curl  -s \
+		-d email=$email \
+		-d password=$password \
+		-d type=conversation \
+		-d generator=Twistr \
+		-d name="$title" \
+		-d tags="$tags" \
+		--data-urlencode conversation@"$2" \
+		"http://www.tumblr.com/api/write")
+	  test -z "$postid" && echo "Oh noes, there was an error!" || echo "Post-id: $postid";;
+
+   	*)
+		echo 'Twistr, a tumblr client. Usage:'
+		echo 'twistr text </path/to/file.txt> ["title"] ["tags"]'
+		echo '       photo </path/to/photo.jpg> ["caption"] ["tags"]'
+		echo '       video </path/to/video.mov> ["caption"] ["tags"]'
+		echo '       audio </path/to/audio.mp3> ["title"] ["caption"] ["tags"]'
+		echo '       link <URI> "[link name]" ["link description"] ["tags"]'
+		echo '       quote <quote> ["source"] ["tags"]'
+		echo '       conversation </path/to/conver/sation.txt> "[title]" "[tags]"'
 		exit 1 ;;
 esac
 #}}
