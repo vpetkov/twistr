@@ -3,7 +3,7 @@ Twistr, a Tumblr client.
 Description
 ============
 
-Twistr is a very simple Tumblr client. In this version, v0.5, it allows you to create posts of these types:
+Twistr is a very simple Tumblr client. In this version, it allows you to create posts of these types:
 
 * Video posts, with a maximum upload size of 50MB per video.
 * Photo posts, with a maximum upload size of 10MB per photo.
@@ -15,9 +15,9 @@ Twistr is a very simple Tumblr client. In this version, v0.5, it allows you to c
 Installation
 ============
 
-The install process is very simple. You can either go to github.com/kiike/twistr and choose any download method,
+The install process is very simple. You can either go to github.com/kiike/twistr and choose any download method or
 download directly via https://github.com/kiike/twistr/zipball/master. You can also contribute to the code by
-cloning the git repository.
+forking the git repository and then sending pull requests.
 
 
 Usage
