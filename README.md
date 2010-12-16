@@ -4,6 +4,7 @@ Description
 ============
 
 Twistr is a very simple Tumblr client. In this version, v0.5, it allows you to create posts of these types:
+
 * Video posts, with a maximum upload size of 50MB per video.
 * Photo posts, with a maximum upload size of 10MB per photo.
 * Text posts, in UTF-8 (multilingual).
