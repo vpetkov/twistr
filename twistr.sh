@@ -1,13 +1,15 @@
 #!/bin/bash
 #
-# Twistr v0.5 Tumblr client.
+# Twistr v0.6, a Tumblr client.
 #
 # by Enric Morales (http://enric.me/twistr). Uncopyrighted 2010.
 
 
 # {{ See if we can import the info on ~/.twistr.rc, otherwise prompt the user.
 source ~/.twistr.rc 2>/dev/null && test -z "$email" || test -z "$password" && \
-echo "Save your Tumblr email and password in this format at $HOME/.twistr.rc:
+echo "Welcome to Twistr. To begin posting, save your Tumblr
+email and password in this format at $HOME/.twistr.rc,
+and chmod it 700 so that only you can read it:
    email="YOUR EMAIL HERE"
    password="YOUR PASSWORD HERE"" && exit 1
 # }}
@@ -77,15 +79,21 @@ case $1 in
 		"http://www.tumblr.com/api/write")
 	  test -z "$postid" && echo "Oh noes, there was an error!" || echo "Post-id: $postid";;
 
-	link) if [ -z "$3" ]
-	         then echo -n "Enter the link name: " && read linkname
-		      else linkname="$3"
-	      fi   
-
+	link) 	if [ -z "$3" ]
+	        	then echo -n "Enter the link name: " && read linkname
+		    	else linkname="$3"
+	      	fi
+			
 			if [ -z "$4" ]
-			   then echo -n "Enter the link description: " && read linkdesc
-			   else linkdesc="$4" 
+				then echo -n "Enter the link description: " && read linkdesc
+				else linkdesc="$4" 
 			fi
+
+			if [ -z "$5" ]
+				then echo -n "Enter the post tags: " && read tags
+				else tags="$5" 
+			fi
+
 
 	  postid=$(curl  -s \
 		-F email=$email \
@@ -93,17 +101,45 @@ case $1 in
 		-F type=link \
 		-F generator=Twistr \
 		-F name="$linkname" \
+		-F tags="$tags" \
 		-F description="$linkdesc" \
 		-F url="$2" \
 		"http://www.tumblr.com/api/write")
 	  test -z "$postid" && echo "Oh noes, there was an error!" || echo "Post-id: $postid";;
 
+	audio)	if [ -z "$3" ]
+	      		then echo -n "Enter the audio title: " && read title
+		 		else title="$3"
+			fi   
 
-   *)	echo "Twistr, a tumblr client. Usage:"
-	echo 'twistr text </path/to/file.txt> "[title]" "[tags]"'
-	echo '       photo </path/to/photo.jpg> "[caption]" "[tags]"'
-	echo '       video </path/to/video.mov> "[caption]" "[tags]"'
-	echo '       link <URI> "[link name]" "[link description]"'
-	exit 1 ;;
+			if [ -z "$4" ]
+				then echo -n "Enter the audio caption: " && read caption
+				else caption="$4" 
+			fi
+			if [ -z "$5" ]
+				then echo -n "Enter the post tags: " && read tags
+				else tags="$5" 
+			fi
+
+
+	  postid=$(curl  -s \
+		-F email=$email \
+		-F password=$password \
+		-F type=audio \
+		-F generator=Twistr \
+		-F name="$title" \
+		-F caption="$caption" \
+		-F tags="$tags" \
+		-F data=@"$2" \
+		"http://www.tumblr.com/api/write")
+	  test -z "$postid" && echo "Oh noes, there was an error!" || echo "Post-id: $postid";;
+
+   	*)	echo "Twistr, a tumblr client. Usage:"
+		echo 'twistr text </path/to/file.txt> "[title]" "[tags]"'
+		echo '       photo </path/to/photo.jpg> "[caption]" "[tags]"'
+		echo '       video </path/to/video.mov> "[caption]" "[tags]"'
+		echo '       audio </path/to/audio.mp3> "[title]" "[caption]" "[tags]"'
+		echo '       link <URI> "[link name]" "[link description]" "[tags]"'
+		exit 1 ;;
 esac
 #}}
