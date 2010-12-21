@@ -25,8 +25,8 @@ Usage
 =====
 
 Run the script after giving it run permissions without any arguments and it will give you brief instructions on its usage.
-Tipically you will have to create a file with your login data, chmod it 600 to protect it from curious eyes, and then run
-Twistr with the data as the first argument, and then two optional fields that will describe and complement your data.
+Tipically you will have to create a file with your login data (at $HOME/.twistrrc), chmod it 600 to protect it from curious
+eyes, and then run Twistr with the data as the first argument, and then two optional fields that will describe and complement your data.
 
 
 License
