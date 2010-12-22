@@ -115,11 +115,11 @@ case $1 in
 	audio)
 		if [ -z "$3" ]
 			then echo -n "Enter the audio caption: " && read caption
-			else caption="$4" 
+			else caption="$3" 
 		fi
 		if [ -z "$4" ]
 			then echo -n "Enter the post tags: " && read tags
-			else tags="$5" 
+			else tags="$4" 
 		fi
 
 		postid=$(curl -fs \
