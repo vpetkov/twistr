@@ -21,15 +21,20 @@ test -z "$email" || test -z "$password" && firstrun
 # }}
 
 # {{ cURL magic!
-case $1 in
+if [ -z "$1" ]
+  then echo -n "Enter the post group: " && read group
+  else group="$1"
+fi
+
+case $2 in
 	text)
-		if [ -z "$3" ]
-   			then echo -n "Enter the post title: " && read title
-			else title="$3"
-	  	fi
 		if [ -z "$4" ]
+   			then echo -n "Enter the post title: " && read title
+			else title="$4"
+	  	fi
+		if [ -z "$5" ]
 	  		then echo -n "Enter the post tags: " && read tags
-			else tags="$4"
+			else tags="$5"
 	  	fi
 
    		postid=$(curl -fs \
@@ -39,7 +44,8 @@ case $1 in
 			-d type=regular \
 			-d title="$title" \
 			-d tags="$tags" \
-			--data-urlencode body="$2" \
+      -d group="$group.tumblr.com" \
+			--data-urlencode body="$3" \
 			"http://www.tumblr.com/api/write") ;;
 
 	photo)
@@ -169,13 +175,13 @@ case $1 in
 
    	*)
 		echo 'Twistr, a tumblr client. Usage:'
-		echo 'twistr text </path/to/file.txt> ["title"] ["tags"]'
-		echo '       photo </path/to/photo.jpg> ["caption"] ["tags"]'
-		echo '       video </path/to/video.mov> ["caption"] ["tags"]'
-		echo '       audio </path/to/audio.mp3> ["title"] ["caption"] ["tags"]'
-		echo '       link <URI> "[link name]" ["link description"] ["tags"]'
-		echo '       quote <quote> ["source"] ["tags"]'
-		echo '       chat </path/to/conver/sation.txt> "[title]" "[tags]"'
+		echo 'twistr group text </path/to/file.txt> ["title"] ["tags"]'
+		echo '             photo </path/to/photo.jpg> ["caption"] ["tags"]'
+		echo '             video </path/to/video.mov> ["caption"] ["tags"]'
+		echo '             audio </path/to/audio.mp3> ["title"] ["caption"] ["tags"]'
+		echo '             link <URI> "[link name]" ["link description"] ["tags"]'
+		echo '             quote <quote> ["source"] ["tags"]'
+		echo '             chat </path/to/conver/sation.txt> "[title]" "[tags]"'
 		exit 1 ;;
 esac
 #}}
