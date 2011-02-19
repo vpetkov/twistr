@@ -11,14 +11,9 @@ function firstrun() {
 	echo "and chmod it 700 so that only you can read it:"
 	echo "   email="YOUR EMAIL HERE""
 	echo "   password="YOUR PASSWORD HERE""
-
 	exit 1
 }
-
-
 #}}
-
-
 
 # {{ See if we can import the info on ~/.twistr.rc, otherwise prompt the user.
 source ~/.twistrrc 2>/dev/null
