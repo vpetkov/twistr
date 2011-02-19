@@ -90,17 +90,17 @@ case $2 in
 			"http://www.tumblr.com/api/write") ;;
 
 	link)
-		if [ -z "$3" ]
-		      	then echo -n "Enter the link name: " && read linkname
-		    	else linkname="$3"
-	   	fi
 		if [ -z "$4" ]
-			then echo -n "Enter the link description: " && read linkdesc
-			else linkdesc="$4" 
-		fi
+		      	then echo -n "Enter the link name: " && read linkname
+		    	else linkname="$4"
+	   	fi
 		if [ -z "$5" ]
+			then echo -n "Enter the link description: " && read linkdesc
+			else linkdesc="$5" 
+		fi
+		if [ -z "$6" ]
 			then echo -n "Enter the post tags: " && read tags
-			else tags="$5" 
+			else tags="$6" 
 		fi
 
 		postid=$(curl -fs \
@@ -111,7 +111,8 @@ case $2 in
 			-F name="$linkname" \
 			-F description="$linkdesc" \
 			-F tags="$tags" \
-			-F url="$2" \
+			-F url="$3" \
+      -F group="$group.tumblr.com" \
 			"http://www.tumblr.com/api/write") ;;
 
 	audio)
