@@ -39,7 +39,7 @@ case $1 in
 			-d type=regular \
 			-d title="$title" \
 			-d tags="$tags" \
-			--data-urlencode body@"$2" \
+			--data-urlencode body="$2" \
 			"http://www.tumblr.com/api/write") ;;
 
 	photo)
