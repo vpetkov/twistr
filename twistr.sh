@@ -137,13 +137,13 @@ case $2 in
 			"http://www.tumblr.com/api/write") ;;
 	
 	quote)
-		if [ -z "$3" ]
-			then echo -n "Enter the quote source: " && read source 
-			else caption="$3" 
-		fi
 		if [ -z "$4" ]
+			then echo -n "Enter the quote source: " && read source 
+			else caption="$4" 
+		fi
+		if [ -z "$5" ]
 			then echo -n "Enter the post tags: " && read tags
-			else tags="$4" 
+			else tags="$5" 
 		fi
 
 		postid=$(curl -fs \
@@ -151,9 +151,10 @@ case $2 in
 			-d password=$password \
 			-d generator=Twistr \
 			-d type=quote \
-			-d quote="$2" \
+			-d quote="$3" \
 			-d source="$source" \
 			-d tags="$tags" \
+      -d group="$group.tumblr.com" \
 			"http://www.tumblr.com/api/write") ;;
 
 	chat)
