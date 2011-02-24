@@ -1,8 +1,8 @@
 #!/bin/bash
 #
-# Twistr v0.7.5, a Tumblr client.
+# Twistr v0.8, a Tumblr client.
 #
-# by Enric Morales (http://enric.me/twistr). Uncopyrighted 2010.
+# by Enric Morales (http://enric.me/twistr). Uncopyrighted 2011.
 # With the contributions of mitsugu
 
 # {{ Functions containter to simplify the code
