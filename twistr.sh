@@ -159,13 +159,13 @@ case $2 in
 			"http://www.tumblr.com/api/write") ;;
 
 	chat)
-		if [ -z "$3" ]
-	    		then echo -n "Enter the chat title: " && read title
-			else title="$3"
-		fi   
 		if [ -z "$4" ]
+	    		then echo -n "Enter the chat title: " && read title
+			else title="$4"
+		fi   
+		if [ -z "$5" ]
 			then echo -n "Enter the post tags: " && read tags
-			else tags="$4" 
+			else tags="$5" 
 		fi
 
 		postid=$(curl -fs \
@@ -175,7 +175,7 @@ case $2 in
 			-d type=conversation \
 			-d title="$title" \
 			-d tags="$tags" \
-			--data-urlencode conversation@"$2" \
+			--data-urlencode conversation="$3" \
 			"http://www.tumblr.com/api/write") ;;
 
    	*)
