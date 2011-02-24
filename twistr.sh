@@ -3,6 +3,7 @@
 # Twistr v0.7.5, a Tumblr client.
 #
 # by Enric Morales (http://enric.me/twistr). Uncopyrighted 2010.
+# With the contributions of mitsugu
 
 # {{ Functions containter to simplify the code
 function firstrun() {
