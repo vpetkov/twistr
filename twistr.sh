@@ -70,13 +70,13 @@ case $2 in
 			"http://www.tumblr.com/api/write") ;;
 
 	video)
-   		if [ -z "$3" ]
-   			then echo -n "Enter the video caption: " && read caption
-			else caption="$3"
+   		if [ -z "$4" ]
+				then echo -n "Enter the video caption: " && read caption
+			else caption="$4"
 	  	fi
-	  	if [ -z "$4" ]
+	  	if [ -z "$5" ]
 	  		then echo -n "Enter the video tags: " && read tags
-			else tags="$4"
+			else tags="$5"
 	  	fi
 
 		postid=$(curl -fs \
@@ -86,7 +86,8 @@ case $2 in
 			-F type=video \
 			-F caption="$caption" \
 			-F tags="$tags" \
-			-F data=@"$2" \
+      -F group="$group.tumblr.com" \
+			-F data=@"$3" \
 			"http://www.tumblr.com/api/write") ;;
 
 	link)
